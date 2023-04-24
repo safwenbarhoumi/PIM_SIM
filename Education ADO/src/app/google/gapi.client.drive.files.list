@@ -1,0 +1,4 @@
+
+<ul *ngIf="isSignedIn">
+  <li *ngFor="let file of files">{{ file.name }}</li>
+</ul>

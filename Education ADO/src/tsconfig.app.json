@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["gapi", "gapi.auth2","gapi.client", "gapi.client.drive"],
+    "outDir": "../out-tsc/app",
+    "module": "esnext",
+    "baseUrl": ""
+    
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ]
+}

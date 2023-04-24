@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+    front-app:
+        build:
+            context: ./app
+            dockerfile: Dockerfile
+        ports:
+            - "54001:4200"
+    back-app:
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        ports:
+            - "54002:8081"
+        depends_on: 
+            - database
+    database:
+        image: mongo
+        ports:
+            - "54003:27017"
+        restart: unless-stopped
