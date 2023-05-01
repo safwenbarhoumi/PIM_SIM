@@ -32,6 +32,10 @@ import { darkTheme } from "../../../components/MaterialTheming";
 
 import firebase from "../../../components/firebase.js";
 import axios from "axios";
+let score = 0;
+let btn = 0;
+
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -139,6 +143,28 @@ const useStyles = makeStyles((theme: Theme) =>
 var code1;
 
 function EditorBody({ storeAt, index }) {
+
+   const [carouselState, setCarouselState] = useState({});
+
+  useEffect(() => {
+    const savedCarouselState = JSON.parse(
+      localStorage.getItem("carouselState")
+    );
+    if (savedCarouselState) {
+      setCarouselState(savedCarouselState);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("carouselState", JSON.stringify(carouselState));
+  }, [carouselState]);
+
+  const handleCarouselChange = (index, value) => {
+    setCarouselState((prevState) => ({ ...prevState, [index]: value }));
+  };
+
+
+
   const classes = useStyles();
   const [codeFontSize, setCodeFontSize] = React.useState(16),
     [showLoader, setShowLoader] = React.useState(true),
@@ -154,6 +180,36 @@ function EditorBody({ storeAt, index }) {
 
   let notOwner = true;
 
+
+
+
+ const [buttonVisibility, setButtonVisibility] = useState(() => {
+   const initialState = {};
+   for (let i = 1; i <= 10; i++) {
+     initialState[`button${i}`] = true;
+   }
+   return initialState;
+ });
+
+ const handleButtonClick = (buttonId) => {
+   setButtonVisibility((prevState) => ({
+     ...prevState,
+     [buttonId]: false,
+   }));
+ };
+
+
+
+
+
+
+
+
+
+   const [showButton, setShowButton] = useState(false);
+
+
+
   function setNotOwner(bool) {
     notOwner = bool;
   }
@@ -164,9 +220,9 @@ function EditorBody({ storeAt, index }) {
       storeAt.substring(storeAt.indexOf("/") + 1)
   )
     setNotOwner(false);
-  console.log("Let edit: " + notOwner);
+  //console.log("Let edit: " + notOwner);
 
-  console.log(storeAt);
+  //console.log(storeAt);
 
   window.addEventListener("resize", (e) => {
     if (window.innerWidth > 600) {
@@ -187,9 +243,11 @@ function EditorBody({ storeAt, index }) {
       .then((snap) => {
         setShowLoader(false);
         selectlang(snap.val().language);
-        setCode(snap.val().code);
-        /* setCode2(snap.val().code2);
-                setCode3(snap.val().code3); */
+        Promise.all([
+          setCode(snap.val().code),
+          setCode2(snap.val().code2),
+          setCode3(snap.val().code3),
+        ]);
       });
   }, []);
 
@@ -205,7 +263,7 @@ function EditorBody({ storeAt, index }) {
         kt: "kotlin",
         swift: "swift",
       };
-      console.log(langArray[lang]);
+      //console.log(langArray[lang]);
       setEditorLanguage(langArray[lang]);
     }
     if (lang !== "" && !notOwner) {
@@ -222,40 +280,29 @@ function EditorBody({ storeAt, index }) {
   }, [lang]);
 
   React.useEffect(() => {
-    if (code2.trim() !== "" && !notOwner) {
+    if (code.trim() !== "" && !notOwner) {
       firebase
         .database()
         .ref(storeAt + "/code")
         .set(code);
-      firebase
+       firebase
         .database()
         .ref(storeAt + "/code2")
         .set(code2);
       firebase
         .database()
         .ref(storeAt + "/code3")
-        .set(code3);
+        .set(code3); 
     }
-  }, [code2, notOwner, storeAt]);
+  }, [code3, notOwner, storeAt]);
 
-  /*  React.useEffect(() => {
-          const codes = [code, code2, code3];
-          codes.forEach((codeValue, index) => {
-            if (codeValue.trim() !== "" && !notOwner) {
-              firebase
-                .database()
-                .ref(`${storeAt}/code${index + 1}`)
-                .set(codeValue);
-            }
-          });
-        }, [code, code2, code3, notOwner, storeAt]); */
+
 
   const createExecutionRequest = () => {
     setTakeInput(false);
     setExecuting(true);
     var data = {
       code: code1,
-
       language: lang,
       input: input,
     };
@@ -272,9 +319,25 @@ function EditorBody({ storeAt, index }) {
     axios(config)
       .then(function (response) {
         setExecuting(false);
-        if (response.data?.output) setOutputValue(response.data.output);
+        if (response.data?.output) {
+          if (btn == 1) {
+            setOutputValue(
+              response.data.output + `\nVotre note est ${(score += 2)}`
+            );
+          } else {
+            setOutputValue(response.data.output);
+          }
+        }
         if (response.data?.error) {
-          setOutputValue((outputValue) => outputValue + response.data?.error);
+          if (btn == 1) {
+            setOutputValue(
+              (outputValue) =>
+                response.data?.error + `\nVotre note est ${(score += 0)}`
+            );
+          } else {
+            setOutputValue((outputValue) => response.data?.error);
+          }
+         // console.log("\nvotre note est : 0");
         }
       })
       .catch(function (error) {
@@ -308,9 +371,10 @@ function EditorBody({ storeAt, index }) {
     );
   }
 
+
   const [time, setTime] = useState(-1);
   const [isRunning, setIsRunning] = useState(false);
-  const [showButton, setShowButton] = useState(true);
+   // const [showButton, setShowButton] = useState(true);
 
   const handleStart = () => {
     setIsRunning(true);
@@ -333,8 +397,8 @@ function EditorBody({ storeAt, index }) {
     } else if (time === 0) {
       alert("Le temps est écoulé !");
       handleStop();
-    }else if (time === -1){
-        handleStart();
+    } else if (time === -1) {
+      handleStart();
     }
     return () => {
       clearInterval(intervalId);
@@ -345,6 +409,8 @@ function EditorBody({ storeAt, index }) {
     event.preventDefault(); // prevent default prompt
     event.returnValue = ""; // set custom message to prompt user
   };
+
+
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -414,132 +480,87 @@ function EditorBody({ storeAt, index }) {
 
         <div id="carouselExampleIndicators" class="carousel slide">
           <div class="carousel-indicators">
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="0"
-              class="active"
-              aria-current="true"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="1"
-              aria-label="Slide 2"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="2"
-              aria-label="Slide 3"
-            ></button>
+            {Array(10)
+              .fill()
+              .map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide-to={i}
+                  className={i === 0 ? "active" : ""}
+                  aria-current={i === 0 ? "true" : ""}
+                  aria-label={`Slide ${i + 1}`}
+                />
+              ))}
           </div>
           <div class="carousel-inner">
-            <div class="carousel-item active">
-              <textarea
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                style={{
-                  color: "#000000",
-                  fontSize: 20,
-                  padding: "10px",
-                  borderRadius: "15px",
-                  width: "1000px",
-                  height: "500px",
-                  resize: "both",
-                  boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.25)",
-                  border: "2px solid #ccc",
-                  backgroundColor: "#f8f8f8",
-                }}
-                readOnly={notOwner}
-              />
+            {Array(10)
+              .fill()
+              .map((_, i) => (
+                <div
+                  key={i}
+                  className={`carousel-item ${i === 0 ? "active" : ""}`}
+                >
+                  <textarea
+                   
+                    value={(carouselState[i])}
+                    onChange={(e) => handleCarouselChange(i, e.target.value)}
+                    style={{
+                      color: "#000000",
+                      fontSize: 20,
+                      padding: "10px",
+                      borderRadius: "15px",
+                      width: "1000px",
+                      height: "500px",
+                      resize: "both",
+                      boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.25)",
+                      border: "2px solid #ccc",
+                      backgroundColor: "#f8f8f8",
+                    }}
+                    readOnly={notOwner}
+                  />
 
-              <div>code</div>
-              <Button
-                size="small"
-                variant="contained"
-                color="#007bff"
-                className={classes.runBtn}
-                startIcon={<PlayArrowRoundedIcon />}
-                onClick={() => {
-                  setTakeInput(true);
-                  code1 = code;
-                }}
-                disabled={executing}
-              >
-                Run
-              </Button>
-            </div>
-            <div class="carousel-item">
-              <textarea
-                value={code2}
-                onChange={(e) => setCode2(e.target.value)}
-                style={{
-                  color: "#000000",
-                  fontSize: 20,
-                  padding: "10px",
-                  borderRadius: "15px",
-                  width: "1000px",
-                  height: "500px",
-                  resize: "both",
-                  boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.25)",
-                  border: "2px solid #ccc",
-                  backgroundColor: "#f8f8f8",
-                }}
-                readOnly={notOwner}
-              />
+                  <div>code {i + 1}</div>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="#007bff"
+                    className={classes.runBtn}
+                    startIcon={<PlayArrowRoundedIcon />}
+                    onClick={() => {
+                      setTakeInput(true);
+                          const pp = carouselState[i].toString();
+                          code1 = pp ;
+                          btn = 0;
+                    }}
+                    disabled={executing}
+                  >
+                    Test
+                  </Button>
 
-              <div>code 2</div>
-              <Button
-                size="small"
-                variant="contained"
-                color="#007bff"
-                className={classes.runBtn}
-                startIcon={<PlayArrowRoundedIcon />}
-                onClick={() => {
-                  setTakeInput(true);
-                  code1 = code2;
-                }}
-                disabled={executing}
-              >
-                Run
-              </Button>
-            </div>
-            <div class="carousel-item">
-              <textarea
-                value={code3}
-                onChange={(e) => setCode3(e.target.value)}
-                style={{
-                  color: "#000000",
-                  fontSize: 20,
-                  padding: "10px",
-                  borderRadius: "15px",
-                  width: "1000px",
-                  height: "500px",
-                  resize: "both",
-                  boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.25)",
-                  border: "2px solid #ccc",
-                  backgroundColor: "#f8f8f8",
-                }}
-                readOnly={notOwner}
-              />
-              <div>code 3</div>
-              <Button
-                size="small"
-                variant="contained"
-                color="primary"
-                className={classes.runBtn}
-                startIcon={<PlayArrowRoundedIcon />}
-                onClick={() => {
-                  setTakeInput(true);
-                  code1 = code3;
-                }}
-                disabled={executing}
-              >
-                Run
-              </Button>
-            </div>
+                  {buttonVisibility[`button${i + 1}`] && (
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="#007bff"
+                      className={classes.runBtn}
+                      startIcon={<PlayArrowRoundedIcon />}
+                      onClick={() => {
+                        setTakeInput(true);
+                        const pp = carouselState[i].toString();
+                        code1 = pp;
+                        btn = 1;
+                        handleButtonClick(`button${i + 1}`);
+                      }}
+                      disabled={executing}
+                      setButtonVisible={true}
+                    >
+                      Run
+                    </Button>
+                  )}
+                </div>
+              ))}
           </div>
           <button
             class="carousel-control-prev"
@@ -565,19 +586,6 @@ function EditorBody({ storeAt, index }) {
           <div className={classes.outputTitle}>Output</div>
           <div className={classes.outputTerminal}>{`${outputValue}`}</div>
           <div className={classes.runPanel}>
-            {/* <Button
-                size="small"
-                variant="contained"
-                color="primary"
-                className={classes.runBtn}
-                startIcon={<PlayArrowRoundedIcon />}
-                onClick={() => {
-                  setTakeInput(true);
-                }}
-                disabled={executing}
-              >
-                Run
-              </Button> */}
             <SelectLanguage />
             {executing && (
               <LinearProgress size={14} className={classes.buttonProgress} />
@@ -589,4 +597,4 @@ function EditorBody({ storeAt, index }) {
   );
 }
 
-export default EditorBody ;
+export default EditorBody;
