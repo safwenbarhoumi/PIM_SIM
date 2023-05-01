@@ -27,6 +27,8 @@ import {
   Theme,
 } from "@material-ui/core";
 import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
+import CancelRoundedIcon from "@material-ui/icons/CancelRounded";
+ import CloseIcon from "@material-ui/icons/Close";
 import { ThemeProvider } from "@material-ui/styles";
 import { darkTheme } from "../../../components/MaterialTheming";
 
@@ -34,8 +36,6 @@ import firebase from "../../../components/firebase.js";
 import axios from "axios";
 let score = 0;
 let btn = 0;
-
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,7 +90,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     runBtn: {
       marginRight: 10,
-      marginBottom: 50,
+      marginBottom: 80,
+      marginTop : 20,
     },
     inputModal: {
       height: "fit-content",
@@ -123,7 +124,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: "auto",
     },
     outputTitle: {
-      color: "#ffffFF",
+      color: "black",
       margin: "7px 0 50px 0",
       textAlign: "left !important",
       borderTop: "1px solid white",
@@ -143,8 +144,7 @@ const useStyles = makeStyles((theme: Theme) =>
 var code1;
 
 function EditorBody({ storeAt, index }) {
-
-   const [carouselState, setCarouselState] = useState({});
+  const [carouselState, setCarouselState] = useState({});
 
   useEffect(() => {
     const savedCarouselState = JSON.parse(
@@ -163,16 +163,14 @@ function EditorBody({ storeAt, index }) {
     setCarouselState((prevState) => ({ ...prevState, [index]: value }));
   };
 
-
-
   const classes = useStyles();
   const [codeFontSize, setCodeFontSize] = React.useState(16),
     [showLoader, setShowLoader] = React.useState(true),
     [lang, selectlang] = React.useState(""),
     [editorLanguage, setEditorLanguage] = React.useState("c_cpp"),
-    [code, setCode] = React.useState(``),
+    /* [code, setCode] = React.useState(``),
     [code2, setCode2] = React.useState(``),
-    [code3, setCode3] = React.useState(``),
+    [code3, setCode3] = React.useState(``), */
     [outputValue, setOutputValue] = React.useState(""),
     [takeInput, setTakeInput] = React.useState(false),
     [executing, setExecuting] = React.useState(false),
@@ -180,35 +178,22 @@ function EditorBody({ storeAt, index }) {
 
   let notOwner = true;
 
+  const [buttonVisibility, setButtonVisibility] = useState(() => {
+    const initialState = {};
+    for (let i = 1; i <= 10; i++) {
+      initialState[`button${i}`] = true;
+    }
+    return initialState;
+  });
 
+  const handleButtonClick = (buttonId) => {
+    setButtonVisibility((prevState) => ({
+      ...prevState,
+      [buttonId]: false,
+    }));
+  };
 
-
- const [buttonVisibility, setButtonVisibility] = useState(() => {
-   const initialState = {};
-   for (let i = 1; i <= 10; i++) {
-     initialState[`button${i}`] = true;
-   }
-   return initialState;
- });
-
- const handleButtonClick = (buttonId) => {
-   setButtonVisibility((prevState) => ({
-     ...prevState,
-     [buttonId]: false,
-   }));
- };
-
-
-
-
-
-
-
-
-
-   const [showButton, setShowButton] = useState(false);
-
-
+  const [showButton, setShowButton] = useState(false);
 
   function setNotOwner(bool) {
     notOwner = bool;
@@ -243,11 +228,11 @@ function EditorBody({ storeAt, index }) {
       .then((snap) => {
         setShowLoader(false);
         selectlang(snap.val().language);
-        Promise.all([
+        /*  Promise.all([
           setCode(snap.val().code),
           setCode2(snap.val().code2),
           setCode3(snap.val().code3),
-        ]);
+        ]); */
       });
   }, []);
 
@@ -279,7 +264,7 @@ function EditorBody({ storeAt, index }) {
     }
   }, [lang]);
 
-  React.useEffect(() => {
+  /*   React.useEffect(() => {
     if (code.trim() !== "" && !notOwner) {
       firebase
         .database()
@@ -294,9 +279,7 @@ function EditorBody({ storeAt, index }) {
         .ref(storeAt + "/code3")
         .set(code3); 
     }
-  }, [code3, notOwner, storeAt]);
-
-
+  }, [code3, notOwner, storeAt]); */
 
   const createExecutionRequest = () => {
     setTakeInput(false);
@@ -337,7 +320,7 @@ function EditorBody({ storeAt, index }) {
           } else {
             setOutputValue((outputValue) => response.data?.error);
           }
-         // console.log("\nvotre note est : 0");
+          // console.log("\nvotre note est : 0");
         }
       })
       .catch(function (error) {
@@ -371,10 +354,9 @@ function EditorBody({ storeAt, index }) {
     );
   }
 
-
   const [time, setTime] = useState(-1);
   const [isRunning, setIsRunning] = useState(false);
-   // const [showButton, setShowButton] = useState(true);
+  // const [showButton, setShowButton] = useState(true);
 
   const handleStart = () => {
     setIsRunning(true);
@@ -409,8 +391,6 @@ function EditorBody({ storeAt, index }) {
     event.preventDefault(); // prevent default prompt
     event.returnValue = ""; // set custom message to prompt user
   };
-
-
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -474,12 +454,55 @@ function EditorBody({ storeAt, index }) {
         {isRunning && (
           <div style={{ color: "#ffffff" }}>
             Temps restant : {time} s{" "}
-            <button onClick={handleStop}>Terminer</button>
+            <Button
+              onClick={handleStop}
+              size="small"
+              variant="contained"
+              color="#007bff"
+              startIcon={<CloseIcon />}
+              style={{
+                marginLeft: 10,
+                marginBottom: 10,
+                borderRadius: 10,
+              }}
+            >
+              Terminer
+            </Button>
+            {/* <Button
+              size="small"
+              variant="contained"
+              color="#007bff"
+              className={classes.runBtn}
+              startIcon={<PlayArrowRoundedIcon />}
+              onClick={() => {
+                setTakeInput(true);
+                const pp = carouselState[i].toString();
+                code1 = pp;
+                btn = 0;
+              }}
+              disabled={executing}
+            >
+              Test
+            </Button> */}
           </div>
         )}
 
         <div id="carouselExampleIndicators" class="carousel slide">
           <div class="carousel-indicators">
+            <style>
+              {`
+              
+
+.carousel-indicators .active {
+  background-color: blue;
+  width: 40px;
+  height: 15px;
+  border-radius: 12px;
+ 
+  
+}
+              `}
+            </style>
             {Array(10)
               .fill()
               .map((_, i) => (
@@ -503,8 +526,7 @@ function EditorBody({ storeAt, index }) {
                   className={`carousel-item ${i === 0 ? "active" : ""}`}
                 >
                   <textarea
-                   
-                    value={(carouselState[i])}
+                    value={carouselState[i]}
                     onChange={(e) => handleCarouselChange(i, e.target.value)}
                     style={{
                       color: "#000000",
@@ -521,7 +543,7 @@ function EditorBody({ storeAt, index }) {
                     readOnly={notOwner}
                   />
 
-                  <div>code {i + 1}</div>
+                  <div>Slide {i + 1}</div>
                   <Button
                     size="small"
                     variant="contained"
@@ -530,9 +552,9 @@ function EditorBody({ storeAt, index }) {
                     startIcon={<PlayArrowRoundedIcon />}
                     onClick={() => {
                       setTakeInput(true);
-                          const pp = carouselState[i].toString();
-                          code1 = pp ;
-                          btn = 0;
+                      const pp = carouselState[i].toString();
+                      code1 = pp;
+                      btn = 0;
                     }}
                     disabled={executing}
                   >
