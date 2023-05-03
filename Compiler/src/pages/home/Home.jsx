@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import { useHistory } from "react-router-dom";
+ import EditorBody from "../editor/components/EditorBody.jsx";
 
 import brandingLogo from "../../components/codexlogo.png";
 import "./home.css";
@@ -114,12 +115,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function Home() {
+ 
   const classes = useStyles();
   const history = useHistory();
 
   const [theme, setTheme] = React.useState(darkTheme),
     [modalOpen, setModalOpen] = React.useState(false),
+
     [classCodes, setClassCodes] = React.useState([]);
+       
+
 
   React.useEffect(() => {
     if (localStorage.getItem("codex-codes"))
@@ -131,6 +136,8 @@ function Home() {
 
   function CreateClass() {
     const [inputClassName, setInputClassName] = React.useState("");
+
+   
     const [lang, selectlang] = React.useState("cpp");
 
     function createNewClass() {
@@ -208,6 +215,8 @@ function Home() {
               setInputClassName(e.target.value);
             }}
           />
+
+
           <SelectCode />
           <Button
             variant="contained"

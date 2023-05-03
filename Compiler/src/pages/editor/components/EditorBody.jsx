@@ -36,7 +36,7 @@ import firebase from "../../../components/firebase.js";
 import axios from "axios";
 let score = 0;
 let btn = 0;
-
+let nbr  ;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     body: {
@@ -144,7 +144,23 @@ const useStyles = makeStyles((theme: Theme) =>
 var code1;
 
 function EditorBody({ storeAt, index }) {
+
   const [carouselState, setCarouselState] = useState({});
+
+   const [showMessage, setShowMessage] = useState(false);
+   //const [userEmail, setUserEmail] = useState(null);
+
+  const [email, setEmail] = useState(localStorage.getItem("email") || "");
+
+  const handlePrompt = () => {
+    const result = prompt("Enter your email address", email);
+    if (result !== null) {
+      localStorage.setItem("email", result);
+      setEmail(result);
+      window.location.reload();
+    }
+  };
+  
 
   useEffect(() => {
     const savedCarouselState = JSON.parse(
@@ -486,6 +502,22 @@ function EditorBody({ storeAt, index }) {
             </Button> */}
           </div>
         )}
+        <div>
+          <Button
+            onClick={handlePrompt}
+            size="small"
+            variant="contained"
+            color="#007bff"
+            style={{
+              marginLeft: 10,
+              marginBottom: 10,
+              borderRadius: 10,
+            }}
+          >
+            Enter number of Questions
+          </Button>
+          <p>Number of Questions : {email}</p>
+        </div>
 
         <div id="carouselExampleIndicators" class="carousel slide">
           <div class="carousel-indicators">
@@ -503,7 +535,7 @@ function EditorBody({ storeAt, index }) {
 }
               `}
             </style>
-            {Array(10)
+            {Array(parseInt(email))
               .fill()
               .map((_, i) => (
                 <button
@@ -517,8 +549,9 @@ function EditorBody({ storeAt, index }) {
                 />
               ))}
           </div>
+
           <div class="carousel-inner">
-            {Array(10)
+            {Array(parseInt(email))
               .fill()
               .map((_, i) => (
                 <div
