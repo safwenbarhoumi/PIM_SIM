@@ -318,11 +318,11 @@ function sendEmail(user, course, coupon) {
     const nodemailer = require('nodemailer');
 
     const transporter = nodemailer.createTransport({
-        host: 'smtp.mailtrap.io',
+        host: 'sandbox.smtp.mailtrap.io',
         port: 2525,
         auth: {
-           user: '2f6b3d8463454e',
-           pass: '5e3b75a49e3ed4'
+           user: '4a92cc79daaff6',
+           pass: 'ee13286bb65b66'
         }
     }
     );

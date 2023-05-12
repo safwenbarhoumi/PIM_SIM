@@ -1,0 +1,9 @@
+#jitsi-iframe {
+    background-color: #e7e5ee;
+    /* replace with your desired color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* add box shadow */
+}
