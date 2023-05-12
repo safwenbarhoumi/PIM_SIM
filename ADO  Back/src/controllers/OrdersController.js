@@ -181,7 +181,7 @@ readHTMLFile(__dirname + '/orderstatus.html', function(err, html) {
     var htmlToSend = template(replacements);
     var mailOptions = {
         from: 'my@email.com',
-        to : 'firas.benabdallah@esprit.tn',
+        to : user.email,//'firas.benabdallah@esprit.tn',
         subject : 'test subject',
         html : htmlToSend
      };

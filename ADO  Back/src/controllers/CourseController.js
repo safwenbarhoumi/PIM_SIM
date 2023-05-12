@@ -315,7 +315,7 @@ async getonecourse(req,res){
     
 }
 function sendEmail(user, course, coupon) {
-    const nodemailer = require('nodemailer');
+    const nodemailer = require('');
 
     const transporter = nodemailer.createTransport({
         host: 'sandbox.smtp.mailtrap.io',
@@ -328,7 +328,7 @@ function sendEmail(user, course, coupon) {
     );
 
     var mailOptions = {
-        from: 'mohamediheb.aloui@esprit.tn',
+        from: 'firas.benabdallah@esprit.tn',//'mohamediheb.aloui@esprit.tn',
         to: user.email,
         subject: `purchase email confirmation for learnily course ${course.title}`,
         text: `Greetings , the coupon password for your course ${course.title} is ${coupon.code} `
