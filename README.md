@@ -1,8 +1,8 @@
 
-  
-
 <p align="center">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+  <a href="https://www.youtube.com/watch?v=VIDEO_ID">
+    <img src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg" alt="Video Thumbnail" width="560" height="315">
+  </a>
 </p>
 
   <p align="center">
