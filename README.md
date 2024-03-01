@@ -1,3 +1,11 @@
+
+  
+
+<p align="center">
+  <img src="[https://github.com/safwenbarhoumi/PIM_SIM/assets/92230521/af787cf5-6a40-41d8-9269-22ff2e71f9b5](https://github.com/safwenbarhoumi/PIM_SIM/assets/92230521/0d178031-ca22-4dfd-8b80-4b6ef29ca348
+)" alt="Esprit2">
+</p>
+
   <p align="center">
    First 1on1 Education Platform
     <br>
