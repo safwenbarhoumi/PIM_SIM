@@ -1,8 +1,11 @@
+p align="center">
+  <a href="http://www.esprit.tn/">
+    <img src="Capture.PNG" alt="Logo" width="500" height="500">
+  </a>
+</p>
 
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=VIDEO_ID">
-    <img src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg" alt="Video Thumbnail" width="560" height="315">
-  </a>
+  **[Watch the Video](https://www.youtube.com/watch?v=VIDEO_ID)**
 </p>
 
   <p align="center">
