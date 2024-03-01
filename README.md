@@ -1,13 +1,3 @@
-<p align="center">
-  <a href="http://www.esprit.tn/">
-    <img src="Capture.PNG" alt="Logo" width="500" height="500">
-  </a>
-</p>
-
-<p align="center">
-  <img src="https://github.com/safwenbarhoumi/PIM_SIM/assets/92230521/af787cf5-6a40-41d8-9269-22ff2e71f9b5" alt="Esprit2">
-</p>
-
   <p align="center">
    First 1on1 Education Platform
     <br>
