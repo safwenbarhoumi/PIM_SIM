@@ -2,6 +2,7 @@
   <a href="http://www.esprit.tn/">
     <img src="Capture.PNG" alt="Logo" width=500 height=500>
   </a>
+![Esprit2](https://github.com/safwenbarhoumi/PIM_SIM/assets/92230521/af787cf5-6a40-41d8-9269-22ff2e71f9b5)
 
   <h3 align="center">We Present to you: Learnly</h3>
 
