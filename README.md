@@ -89,6 +89,95 @@ Make sure you have installed all of the following prerequisites on your developm
 ## Install
 
 **Installation Steps**:
+1. Flutter Project Setup Instructions:
+Prerequisites:
+Install Flutter SDK: Flutter Installation Guide
+Ensure you have an IDE (VS Code, Android Studio) with Flutter and Dart plugins.
+Set up the environment for running on Android/iOS emulators or physical devices.
+Steps:
+
+# Step 1: Clone the repository
+```
+git clone https://github.com/safwenbarhoumi/PIM2.git
+```
+# Step 2: Navigate to the Flutter project directory
+```
+cd PIM2/flutter_project_directory
+```
+# Step 3: Install Flutter dependencies
+```
+flutter pub get
+```
+# Step 4: Run the project on a connected device/emulator
+```
+flutter run
+```
+Additional Tips:
+Make sure you have all necessary Android/iOS SDKs installed.
+You can use flutter doctor to ensure all dependencies are installed correctly.
+2. Angular Project Setup Instructions:
+Prerequisites:
+Install Node.js and npm: Node.js Download
+Install Angular CLI globally:
+
+```
+npm install -g @angular/cli
+```
+Steps:
+
+# Step 1: Clone the repository
+```
+git clone https://github.com/safwenbarhoumi/PIM2.git
+```
+
+# Step 2: Navigate to the Angular project directory
+```
+cd PIM2/angular_project_directory
+```
+
+# Step 3: Install Angular dependencies
+```
+npm install
+```
+
+# Step 4: Run the Angular application
+```
+ng serve
+```
+
+# Step 5: Open your browser and navigate to
+http://localhost:4200
+Additional Tips:
+Ensure your Angular CLI version is compatible with the project.
+You can specify a different port using ng serve --port 4201 if 4200 is already in use.
+** 3. Node.js Project Setup Instructions:
+Prerequisites:
+Install Node.js and npm: Node.js Download
+Steps:
+
+# Step 1: Clone the repository
+```
+git clone https://github.com/safwenbarhoumi/PIM2.git
+```
+# Step 2: Navigate to the Node.js project directory
+```
+cd PIM2/nodejs_project_directory
+```
+
+# Step 3: Install Node.js dependencies
+```
+npm install
+```
+# Step 4: Set up environment variables (if necessary)
+# Create a .env file and add the required environment variables like DB connection, API keys, etc.
+
+# Step 5: Run the Node.js server
+```
+npm start
+```
+
+# The server will typically run on http://localhost:3000
+
 
 ```bash
 # Step one: Clone this repo
