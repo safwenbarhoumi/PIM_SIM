@@ -1,24 +1,9 @@
-p align="center">
-  <a href="http://www.esprit.tn/">
-    <img src="Capture.PNG" alt="Logo" width="500" height="500">
-  </a>
-</p>
+### ADO : Plateforme Éducative Dédiée aux Adolescents
+ADO est une plateforme éducative spécialement conçue pour les adolescents, visant à répondre à tous leurs besoins éducatifs et personnels. Elle offre une large gamme de ressources pédagogiques interactives, adaptées à leurs centres d'intérêt et à leur niveau d'apprentissage.
 
-<p align="center">
-  **[Watch the Video](https://www.youtube.com/watch?v=VIDEO_ID)**
-</p>
+Grâce à ADO, les jeunes peuvent accéder à des contenus variés, tels que des cours en ligne, des vidéos éducatives, des tutoriels, et des exercices interactifs. La plateforme favorise également le développement des compétences sociales et personnelles à travers des activités ludiques, des forums de discussion, et des outils de suivi de progrès.
 
-  <p align="center">
-   First 1on1 Education Platform
-    <br>
-    Base project made with much  :heart: . Contains CRUD, patterns, API's and much more!
-    <br>
-    <br>
-    <a href="https://gitlab.com/espritmobile-2021/1on1-education/1-on-1-education/-/issues/new">Report bug</a>
-    ·
-    <a href="https://gitlab.com/espritmobile-2021/1on1-education/1-on-1-education/-/issues/new">Request feature</a>
-  </p>
-</p>
+
 
 ## Table of contents
 
