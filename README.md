@@ -89,7 +89,7 @@ git clone https://github.com/safwenbarhoumi/PIM2.git
 ```
 # Step 2: Navigate to the Flutter project directory
 ```
-cd PIM2/flutter_project_directory
+cd PIM_SIM
 ```
 # Step 3: Install Flutter dependencies
 ```
@@ -119,7 +119,7 @@ git clone https://github.com/safwenbarhoumi/PIM2.git
 
 # Step 2: Navigate to the Angular project directory
 ```
-cd PIM2/angular_project_directory
+cd PIM_SIM/Education ADO
 ```
 
 # Step 3: Install Angular dependencies
@@ -148,7 +148,7 @@ git clone https://github.com/safwenbarhoumi/PIM2.git
 ```
 # Step 2: Navigate to the Node.js project directory
 ```
-cd PIM2/nodejs_project_directory
+cd PIM_SIM/ADO Back
 ```
 
 # Step 3: Install Node.js dependencies
@@ -169,7 +169,7 @@ npm start
 ```bash
 # Step one: Clone this repo
 
-git clone https://github.com/safwenbarhoumi/PIM2.git
+git clone https://github.com/safwenbarhoumi/PIM_SIM.git
 
 # Using Docker
 docker compose up -d
@@ -180,7 +180,7 @@ docker compose up -d
 ```bash
 # Normal usage
 
-git clone https://gitlab.com/espritmobile-2021/1on1-education/1-on-1-education.git
+git clone git clone https://github.com/safwenbarhoumi/PIM_SIM.git
 
 # Open server folder and run
 npm install
